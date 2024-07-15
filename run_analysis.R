@@ -30,8 +30,10 @@ colNames = colnames(merge)
 mean_and_std = (grepl("activityid", colNames)| grepl("subjectid", colNames)| grepl("mean..", colNames) | grepl("std.." , colNames))
 mean_and_std_set <- merge [ , mean_and_std == TRUE]
 actnamesset = merge(mean_and_std_set, activity_labels, by = "activityid", all.x = TRUE)
+finaldata <- aggregate(actnamesset, list(actnamesset$subjectid, actnamesset$activityid), mean)
+write.table(finaldata, "finaldata.txt", row.names = FALSE)
 
-
+##stuff that didnt work##
 meanSD <- grep("-mean\\(\\)|-std\\(\\)", features [, 2])
 meanSDtidy <- merge [, meanSD]
 colnames(meanSDtidy) <- features[meanSD, 2]
